@@ -5,7 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Контакты</title>
     <link rel="stylesheet" href="style.css" />
-    <style>@media (max-width: 768px) {
+    <style>
+
+nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+        
+    .main-nav {
+        display: flex;
+      }
+
+      .burger-menu-button {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5em;
+      }
+
+    
+    @media (max-width: 768px) {
       .burger-menu-button {
     display: block;
     cursor: pointer;
