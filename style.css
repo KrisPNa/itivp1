@@ -1,0 +1,301 @@
+/* Основные стили */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #4f5fed;
+  padding: 10px 20px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer {
+  background-color: #4f5fed;
+  padding: 10px 20px;
+  color: #fff;
+  text-align: center;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  padding: 20px;
+  font-family: 'Unbounded', sans-serif;
+}
+
+.catalog1 {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+  margin-bottom: 100px;
+}
+
+.product-item {
+  height: auto;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 10px;
+  width: 290px;
+  text-align: center;
+}
+
+.product-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.product-name, .product-price, .product-brand {
+  margin: 5px 0;
+}
+
+/* Стили для бургер-меню */
+.burger-menu {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.burger-menu span {
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  margin: 4px 0;
+}
+
+#burgerToggle {
+  display: none;
+}
+
+/* Медиазапросы для мобильных устройств (ширина до 600px) */
+@media (max-width: 600px) {
+  .burger-menu {
+    display: flex;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: #4f5fed;
+    position: absolute;
+    top: 60px;
+    left: 0;
+  }
+
+  .nav-links a {
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #fff;
+  }
+
+  #burgerToggle:checked ~ .nav-links {
+    display: flex;
+  }
+
+  .catalog1 {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    text-align: center;
+  }
+
+  .products {
+    justify-content: center;
+  }
+
+  .product-item {
+    width: calc(50% - 20px);
+  }
+
+  /* Новые стили для адаптации категорий */
+  .catalog {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .category {
+    width: 100%; /* Каждая категория занимает всю ширину */
+    margin-bottom: 10px; /* Отступ между категориями */
+  }
+
+  .category img {
+    width: 100%; /* Изображение занимает всю ширину */
+  }
+
+  .category p {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+}
+
+/* Дополнительные стили для других элементов */
+.center-image {
+  width: 100%;
+  height: auto;
+}
+
+.item, .item img {
+  border-radius: 10px;
+}
+
+.item p, .sidebar ul li a {
+  color: #000;
+}
+
+.item img, .product-item img {
+  max-width: 100%;
+  height: auto;
+}
+
+.category {
+  height: auto;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 10px;
+  width: 290px;
+}
+
+.category, .contacts, .container1, .home, .item, .product-item, footer {
+  text-align: center;
+}
+
+.other {
+  background-image: url("img/back/back.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.collection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.item {
+  padding: 20px;
+  text-align: center;
+}
+
+.item img {
+  width: 250px;
+  border: 2px solid #000;
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  transition: transform 0.3s;
+}
+
+.item:hover img {
+  transform: scale(1.05);
+}
+
+.item p {
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+  margin-bottom: 100px;
+}
+
+.catalog1 {
+  display: flex;
+  width: 100%;
+}
+
+.contacts, .image-container img {
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.container1 {
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  justify-content: center;
+  margin-top: 20px;
+  box-shadow: 0 6px 12px #000;
+}
+
+.contacts {
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 4px 8px #000;
+}
+
+/* Медиазапросы для планшетов (ширина от 601px до 1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .catalog {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .product-item {
+    width: calc(33.33% - 20px);
+  }
+
+  .image-container img {
+    max-width: 400px;
+  }
+
+  .sidebar {
+    width: 150px;
+  }
+}
