@@ -15,7 +15,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #ffffff;
             color: #333;
         }
 
@@ -29,31 +29,28 @@
             overflow: hidden;
         }
 
-        header h1 {
+        /* header h1 {
             margin: 0;
-        }
+        } */
 
         /* Стили для навигации */
         .main-nav {
-            display: flex;
-            justify-content: center;
-        }
+        display: flex;
+      }
 
-        .main-nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            padding: 8px 12px;
-            border-radius: 5px;
-        }
+      nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 15px;
+      }
 
-        .main-nav a:hover {
-            text-decoration: underline;
-        }
+      nav a:hover {
+        text-decoration: underline;
+      }
 
         .container {
             padding: 20px;
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
@@ -123,7 +120,6 @@
             border: none;
             color: white;
             font-size: 1.5em;
-            cursor: pointer;
         }
 
 
@@ -132,36 +128,34 @@
 
             /* Показываем кнопку бургер-меню */
             .burger-menu-button {
-                display: block;
-            }
+          display: block;
+          cursor: pointer;
+          z-index: 11;
+        }
 
-            /* Скрываем основную навигацию и делаем её выпадающей */
-            .main-nav {
-                display: none;
-                position: fixed;
-                top: 0;
-                right: 0;
-                width: 200px;
-                height: 100%;
-                background-color: #4f5fed;
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: stretch;
-                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-                z-index: 10;
-                padding-top: 60px;
-            }
+        .main-nav {
+          display: none;
+          position: fixed;
+          top: 0;
+          right: 0;
+          width: 200px;
+          height: 100%;
+          background-color: #4f5fed;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+          z-index: 10;
+        }
 
-            .main-nav.nav-active {
-                display: flex;
-            }
+        .main-nav.nav-active {
+          display: flex;
+        }
 
-            .main-nav a {
-                padding: 12px 20px;
-                text-align: left;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-                margin: 0;
-            }
+        .main-nav a {
+          margin-bottom: 20px;
+          font-size: 1.2em;
+        }
 
             /* Адаптация секции .home на мобильных устройствах */
             .home h2 {
@@ -182,6 +176,7 @@
                 padding: 10px;
             }
         }
+        
     </style>
 </head>
 
