@@ -1,14 +1,22 @@
-/* Основные стили */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+
+}
+
+
+.other {
+  background-image: url('img/back.jpg');
+  background-size: 1000px 800px fixed;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 header {
   background-color: #4f5fed;
-  padding: 10px 20px;
   color: #fff;
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -16,13 +24,16 @@ header {
 
 footer {
   background-color: #4f5fed;
-  padding: 10px 20px;
   color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
   text-align: center;
+
 }
 
 nav a {
-  color: #fff;
+  color: white;
   text-decoration: none;
   margin: 0 15px;
 }
@@ -36,8 +47,64 @@ nav a:hover {
   font-family: 'Unbounded', sans-serif;
 }
 
+.home,
+.contacts {
+  text-align: center;
+}
+
+.collection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.item {
+
+  border-radius: 10px;
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+}
+
+.item img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.category {
+  text-align: center;
+  text-decoration: none;
+}
+
+.item img {
+  width: 250px;
+  height: auto;
+  border-radius: 10px;
+  border: 2px solid #000000;
+  transition: transform 0.3s;
+}
+
+.item:hover img {
+  transform: scale(1.05);
+}
+
+.item p {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #000000;
+  text-decoration: none;
+}
+
 .catalog1 {
   display: flex;
+  width: 100%;
 }
 
 .sidebar {
@@ -53,10 +120,16 @@ nav a:hover {
 .sidebar ul {
   list-style-type: none;
   padding-left: 0;
+
 }
 
 .sidebar ul li {
   margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+
+  color: #000000;
 }
 
 .products {
@@ -64,208 +137,22 @@ nav a:hover {
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 20px;
-  margin-bottom: 100px;
+
 }
 
 .product-item {
+  width: calc(25% - 20px);
   height: auto;
+  text-align: center;
   box-sizing: border-box;
   border-radius: 10px;
   padding: 10px;
   width: 290px;
-  text-align: center;
 }
 
 .product-item img {
   max-width: 100%;
   height: auto;
-  border-radius: 10px;
-}
-
-.product-name, .product-price, .product-brand {
-  margin: 5px 0;
-}
-
-/* Стили для бургер-меню */
-.burger-menu {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-}
-
-.burger-menu span {
-  width: 25px;
-  height: 3px;
-  background-color: #fff;
-  margin: 4px 0;
-}
-
-#burgerToggle {
-  display: none;
-}
-
-/* Медиазапросы для мобильных устройств (ширина до 600px) */
-@media (max-width: 600px) {
-
-  .burger-menu {
-    display: flex;
-  }
-
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    background-color: #4f5fed;
-    position: absolute;
-    top: 60px;
-    left: 0;
-  }
-
-  .nav-links a {
-    text-align: center;
-    padding: 10px;
-    border-top: 1px solid #fff;
-  }
-
-  #burgerToggle:checked ~ .nav-links {
-    display: flex;
-  }
-
-  .catalog1 {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    text-align: center;
-  }
-
-  .products {
-    justify-content: center;
-  }
-
-  .product-item {
-    width: calc(50% - 20px);
-  }
-
-  /* Новые стили для адаптации категорий */
-  .catalog {
-    display: grid; /* Сетка вместо flex */
-    grid-template-columns: repeat(2, 1fr); /* Два элемента в строке */
-    gap: 15px; /* Уменьшенные отступы между элементами */
-    justify-content: center; /* Центрирование элементов */
-    align-items: center; /* Центрирование вертикально */
-    padding-bottom: 20px; /* Отступ снизу */
-  }
-
-  .category {
-    width: 100%; /* Каждая категория занимает всю ширину */
-    margin-bottom: 10px; /* Отступ между категориями */
-  }
-
-  .category img {
-    width: 150px; /* Уменьшенная ширина изображения для мобильных устройств */
-    height: auto;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: none;
-  }
-
-  .category p {
-    font-size: 1em; /* Уменьшенный размер текста под изображением */
-    text-align: center;
-    margin-top: 5px;
-    color: #333333;
-  }
-}
-
-/* Дополнительные стили для других элементов */
-.center-image {
-  width: 100%;
-  height: auto;
-}
-
-.item, .item img {
-  border-radius: 10px;
-}
-
-.item p, .sidebar ul li a {
-  color: #000;
-}
-
-.item img, .product-item img {
-  max-width: 100%;
-  height: auto;
-}
-
-.category {
-  height: auto;
-  box-sizing: border-box;
-  border-radius: 10px;
-  padding: 10px;
-  width: 290px;
-}
-
-.category, .contacts, .container1, .home, .item, .product-item, footer {
-  text-align: center;
-}
-
-.other {
-  background-image: url("img/back/back.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.collection {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.item {
-  padding: 20px;
-  text-align: center;
-}
-
-.item img {
-  width: 250px;
-  border: 2px solid #000;
-  max-width: 100%;
-  height: auto;
-  border-radius: 10px;
-  transition: transform 0.3s;
-}
-
-.item:hover img {
-  transform: scale(1.05);
-}
-
-.item p {
-  margin-top: 10px;
-  font-weight: 700;
-}
-
-.catalog {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  width: 100%;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 20px;
-  margin-bottom: 100px;
-}
-
-.catalog1 {
-  display: flex;
-  width: 100%;
-}
-
-.contacts, .image-container img {
-  border-radius: 12px;
-  margin-bottom: 20px;
 }
 
 .container1 {
@@ -274,38 +161,100 @@ nav a:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .image-container img {
   max-width: 500px;
-  width: 100%;
   height: auto;
   justify-content: center;
+  margin-bottom: 20px;
   margin-top: 20px;
-  box-shadow: 0 6px 12px #000;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+
 }
 
 .contacts {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.8);
+
   padding: 20px;
-  box-shadow: 0 4px 8px #000;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+}
+@media screen and (max-width: 768px) {
+  .center-image {
+    width: 100%;
+  }
 }
 
-/* Медиазапросы для планшетов (ширина от 601px до 1024px) */
-@media (min-width: 601px) and (max-width: 1024px) {
-  .catalog {
-    grid-template-columns: repeat(2, 1fr);
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .center-image {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .center-image {
+    width: 60%;
+  }
+}
+
+.main-nav {
+  display: flex;
+}
+
+.main-nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+}
+
+.main-nav a:hover {
+  text-decoration: underline;
+}
+
+/* Стили для кнопки бургер-меню */
+.burger-menu-button {
+  display: none; /* Скрыта на десктопе */
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5em;
+}
+
+/* Медиа-запрос для мобильных устройств */
+@media (max-width: 768px) {
+  .burger-menu-button {
+      display: block; /* Показываем кнопку бургер-меню */
+      cursor: pointer;
+      z-index: 11; /* Поверх меню */
   }
 
-  .product-item {
-    width: calc(33.33% - 20px);
+  /* Скрываем горизонтальное меню */
+  .main-nav {
+      display: none; /* Скрыто по умолчанию */
+      position: fixed; /* Меню фиксируется поверх контента */
+      top: 0;
+      right: 0;
+      width: 200px; /* Ширина выпадающего меню */
+      height: 100%; /* Высота на весь экран */
+      background-color: #4f5fed; /* Цвет фона меню */
+      flex-direction: column; /* Вертикальный список */
+      justify-content: center; /* Центрирование ссылок */
+      align-items: center; /* Центрирование ссылок */
+      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5); /* Тень для меню */
+      z-index: 10; /* Поверх контента */
   }
 
-  .image-container img {
-    max-width: 400px;
+  .main-nav.nav-active {
+      display: flex; /* Показываем меню при клике на бургер */
   }
 
-  .sidebar {
-    width: 150px;
+  .main-nav a {
+      margin-bottom: 20px; /* Отступ между ссылками */
+      font-size: 1.2em; /* Увеличиваем размер шрифта ссылок */
   }
 }
