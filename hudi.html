@@ -99,6 +99,7 @@
         display: block;
         margin: 0 auto;
       }
+
       footer {
         overflow: hidden; /* Добавлено для footer */
         padding: 10px 20px;
@@ -106,6 +107,7 @@
         background-color: #4f5fed;
         color: #fff;
       }
+
       @media (max-width: 768px) {
         .burger-menu-button {
           display: block;
@@ -219,5 +221,13 @@
     <footer>
       <p>&copy; 2025 Магазин одежды. Все права защищены.</p>
     </footer>
+    <script>
+      const burgerButton = document.querySelector('.burger-menu-button');
+      const nav = document.querySelector('.main-nav');
+
+      burgerButton.addEventListener('click', () => {
+        nav.classList.toggle('nav-active');
+      });
+    </script>
   </body>
 </html>
