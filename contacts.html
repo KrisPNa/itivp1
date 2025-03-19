@@ -5,11 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Контакты</title>
     <link rel="stylesheet" href="style.css" />
+    <style>@media (max-width: 768px) {
+      .burger-menu-button {
+    display: block;
+    cursor: pointer;
+    z-index: 11;
+  }
+
+  .main-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 100%;
+    background-color: #4f5fed;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+  }
+
+  .main-nav.nav-active {
+    display: flex;
+  }
+
+  .main-nav a {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+  }
+  }
+  </style>
   </head>
   <body class="other">
     <header>
       <h1>Магазин одежды</h1>
-      <nav>
+      <!-- Кнопка бургер-меню -->
+      <button class="burger-menu-button">
+        <i class="fas fa-bars"></i>
+      </button>
+      <!-- Навигация -->
+      <nav class="main-nav">
         <a href="index.html">Главная</a>
         <a href="contacts.html">Контакты</a>
         <a href="collection.html">Коллекция</a>
