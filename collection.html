@@ -81,7 +81,17 @@
             font-weight: bold;
             color: #000000;
         }
+        .main-nav {
+        display: flex;
+      }
 
+      .burger-menu-button {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5em;
+      }
         /* Медиа-запрос для мобильных устройств (максимальная ширина 768px) */
         @media (max-width: 768px) {
             .burger-menu-button {
@@ -143,15 +153,15 @@
     <header>
         <h1>Магазин одежды</h1>
         <!-- Кнопка бургер-меню -->
-        <button class="burger-menu-button">
-            <i class="fas fa-bars"></i>
-        </button>
-        <!-- Навигация -->
-        <nav class="main-nav">
-            <a href="index2.html">Главная</a>
-            <a href="contacts.html">Контакты</a>
-            <a href="collection.html">Коллекция</a>
-        </nav>
+      <button class="burger-menu-button">
+        <i class="fas fa-bars"></i>
+      </button>
+      <!-- Навигация -->
+      <nav class="main-nav">
+        <a href="index2.html">Главная</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="collection.html">Коллекция</a>
+      </nav>
     </header>
 
     <div class="container">
