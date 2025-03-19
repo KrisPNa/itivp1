@@ -16,7 +16,7 @@ nav a {
         nav a:hover {
             text-decoration: underline;
         }
-        
+
     .main-nav {
         display: flex;
       }
@@ -103,5 +103,13 @@ nav a {
         &copy; 2025 Магазин одежды. Все права защищены.
       </p>
     </footer>
+    <script>
+      const burgerButton = document.querySelector('.burger-menu-button');
+      const nav = document.querySelector('.main-nav');
+
+      burgerButton.addEventListener('click', () => {
+        nav.classList.toggle('nav-active');
+      });
+    </script>
   </body>
 </html>
