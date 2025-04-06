@@ -122,40 +122,182 @@
             font-size: 1.5em;
         }
 
+        /* Стили для новостной системы */
+        .news-system {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+        
+        .news-form {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .news-form input, .news-form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .news-form button {
+            background: #4f5fed;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .news-form button:hover {
+            background: #3a4bd1;
+        }
+        
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        
+        .search-box {
+            padding: 8px;
+            flex-grow: 1;
+            min-width: 200px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .sort-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .sort-options select, .sort-options button {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+        
+        .news-item {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+            background: white;
+        }
+        
+        .news-item h3 {
+            margin-top: 0;
+            color: #4f5fed;
+        }
+        
+        .news-item p {
+            margin-bottom: 10px;
+        }
+        
+        .news-item .date {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .news-item .actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+        
+        .news-item .actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 5px;
+            color: #666;
+            font-size: 1em;
+        }
+        
+        .news-item .actions button:hover {
+            color: #4f5fed;
+        }
+        
+        .edit-form {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .edit-form input, .edit-form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .edit-form button {
+            padding: 8px 15px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .save-edit-btn {
+            background: #4f5fed;
+            color: white;
+        }
+        
+        .cancel-edit-btn {
+            background: #f5f5f5;
+            color: #333;
+        }
 
         /* Медиа-запрос для мобильных устройств */
         @media (max-width: 768px) {
-
             /* Показываем кнопку бургер-меню */
             .burger-menu-button {
-          display: block;
-          cursor: pointer;
-          z-index: 11;
-        }
+                display: block;
+                cursor: pointer;
+                z-index: 11;
+            }
 
-        .main-nav {
-          display: none;
-          position: fixed;
-          top: 0;
-          right: 0;
-          width: 200px;
-          height: 100%;
-          background-color: #4f5fed;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-          z-index: 10;
-        }
+            .main-nav {
+                display: none;
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 200px;
+                height: 100%;
+                background-color: #4f5fed;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+                z-index: 10;
+            }
 
-        .main-nav.nav-active {
-          display: flex;
-        }
+            .main-nav.nav-active {
+                display: flex;
+            }
 
-        .main-nav a {
-          margin-bottom: 20px;
-          font-size: 1.2em;
-        }
+            .main-nav a {
+                margin-bottom: 20px;
+                font-size: 1.2em;
+            }
 
             /* Адаптация секции .home на мобильных устройствах */
             .home h2 {
@@ -175,8 +317,35 @@
             .category {
                 padding: 10px;
             }
+            
+            /* Адаптация новостной системы на мобильных устройствах */
+            .controls {
+                flex-direction: column;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .sort-options {
+                width: 100%;
+            }
+            
+            .sort-options select, .sort-options button {
+                width: 100%;
+            }
+            
+            .news-item .actions {
+                position: static;
+                margin-bottom: 10px;
+                text-align: right;
+            }
+            
+            .news-form button, .edit-form button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
         }
-        
     </style>
 </head>
 
@@ -224,19 +393,245 @@
                 <a href="sportivnye_kostyumy.html">Спорт</a>
             </div>
         </div>
+        
+        <!-- Новостная система -->
+        <div class="news-system">
+            <h2>Новости магазина</h2>
+            
+            <div class="news-form">
+                <h3>Добавить новость</h3>
+                <input type="text" id="news-title" placeholder="Заголовок новости" required>
+                <textarea id="news-content" rows="4" placeholder="Содержание новости" required></textarea>
+                <button id="add-news-btn">Добавить новость</button>
+            </div>
+            
+            <div class="controls">
+                <input type="text" id="search-news" class="search-box" placeholder="Поиск новостей...">
+                <div class="sort-options">
+                    <select id="sort-by">
+                        <option value="date-desc">Сначала новые</option>
+                        <option value="date-asc">Сначала старые</option>
+                        <option value="title-asc">По названию (А-Я)</option>
+                        <option value="title-desc">По названию (Я-А)</option>
+                    </select>
+                    <button id="clear-storage">Очистить все</button>
+                </div>
+            </div>
+            
+            <div id="news-container"></div>
+        </div>
     </div>
 
     <footer>
         <p style="text-align: left; padding-left: 20px">
             &copy; 2025 Магазин одежды. Все права защищены.</p>
     </footer>
-       <script>
+    
+    <script>
+        // Бургер-меню
         const burgerButton = document.querySelector('.burger-menu-button');
         const nav = document.querySelector('.main-nav');
   
         burgerButton.addEventListener('click', () => {
-          nav.classList.toggle('nav-active');
+            nav.classList.toggle('nav-active');
         });
-      </script>
-    </body>
-  </html>
+        
+        // Новостная система
+        document.addEventListener('DOMContentLoaded', function() {
+            // Элементы DOM
+            const newsContainer = document.getElementById('news-container');
+            const newsTitleInput = document.getElementById('news-title');
+            const newsContentInput = document.getElementById('news-content');
+            const addNewsBtn = document.getElementById('add-news-btn');
+            const searchInput = document.getElementById('search-news');
+            const sortSelect = document.getElementById('sort-by');
+            const clearStorageBtn = document.getElementById('clear-storage');
+            
+            // Загрузка новостей при загрузке страницы
+            loadNews();
+            
+            // Добавление новости
+            addNewsBtn.addEventListener('click', addNews);
+            
+            // Поиск новостей
+            searchInput.addEventListener('input', loadNews);
+            
+            // Сортировка новостей
+            sortSelect.addEventListener('change', loadNews);
+            
+            // Очистка хранилища
+            clearStorageBtn.addEventListener('click', function() {
+                if (confirm('Вы уверены, что хотите удалить все новости?')) {
+                    localStorage.removeItem('news');
+                    loadNews();
+                }
+            });
+            
+            // Функция добавления новости
+            function addNews() {
+                const title = newsTitleInput.value.trim();
+                const content = newsContentInput.value.trim();
+                
+                if (!title || !content) {
+                    alert('Пожалуйста, заполните все поля');
+                    return;
+                }
+                
+                const newsItem = {
+                    id: Date.now(),
+                    title: title,
+                    content: content,
+                    date: new Date().toISOString()
+                };
+                
+                let news = getNewsFromStorage();
+                news.unshift(newsItem);
+                saveNewsToStorage(news);
+                
+                // Очистка полей ввода
+                newsTitleInput.value = '';
+                newsContentInput.value = '';
+                
+                // Перезагрузка новостей
+                loadNews();
+            }
+            
+            // Функция загрузки новостей
+            function loadNews() {
+                let news = getNewsFromStorage();
+                
+                // Поиск
+                const searchTerm = searchInput.value.toLowerCase();
+                if (searchTerm) {
+                    news = news.filter(item => 
+                        item.title.toLowerCase().includes(searchTerm) || 
+                        item.content.toLowerCase().includes(searchTerm)
+                    );
+                }
+                
+                // Сортировка
+                const sortOption = sortSelect.value;
+                news.sort((a, b) => {
+                    switch (sortOption) {
+                        case 'date-desc':
+                            return new Date(b.date) - new Date(a.date);
+                        case 'date-asc':
+                            return new Date(a.date) - new Date(b.date);
+                        case 'title-asc':
+                            return a.title.localeCompare(b.title);
+                        case 'title-desc':
+                            return b.title.localeCompare(a.title);
+                        default:
+                            return 0;
+                    }
+                });
+                
+                // Отображение
+                renderNews(news);
+            }
+            
+            // Функция рендеринга новостей
+            function renderNews(news) {
+                newsContainer.innerHTML = '';
+                
+                if (news.length === 0) {
+                    newsContainer.innerHTML = '<p>Новостей не найдено</p>';
+                    return;
+                }
+                
+                news.forEach(item => {
+                    const newsItem = document.createElement('div');
+                    newsItem.className = 'news-item';
+                    newsItem.dataset.id = item.id;
+                    
+                    const date = new Date(item.date);
+                    const formattedDate = date.toLocaleString('ru-RU');
+                    
+                    newsItem.innerHTML = `
+                        <div class="actions">
+                            <button class="edit-btn" title="Редактировать">✏️</button>
+                            <button class="delete-btn" title="Удалить">🗑️</button>
+                        </div>
+                        <h3>${item.title}</h3>
+                        <p>${item.content}</p>
+                        <div class="date">${formattedDate}</div>
+                        <div class="edit-form" id="edit-form-${item.id}">
+                            <input type="text" class="edit-title" value="${item.title}" required>
+                            <textarea class="edit-content" rows="4" required>${item.content}</textarea>
+                            <button class="save-edit-btn">Сохранить</button>
+                            <button class="cancel-edit-btn">Отмена</button>
+                        </div>
+                    `;
+                    
+                    newsContainer.appendChild(newsItem);
+                    
+                    // Добавление обработчиков для кнопок
+                    const deleteBtn = newsItem.querySelector('.delete-btn');
+                    const editBtn = newsItem.querySelector('.edit-btn');
+                    const saveEditBtn = newsItem.querySelector('.save-edit-btn');
+                    const cancelEditBtn = newsItem.querySelector('.cancel-edit-btn');
+                    const editForm = newsItem.querySelector('.edit-form');
+                    
+                    deleteBtn.addEventListener('click', () => deleteNews(item.id));
+                    editBtn.addEventListener('click', () => {
+                        editForm.style.display = 'block';
+                    });
+                    cancelEditBtn.addEventListener('click', () => {
+                        editForm.style.display = 'none';
+                    });
+                    saveEditBtn.addEventListener('click', () => {
+                        const newTitle = newsItem.querySelector('.edit-title').value.trim();
+                        const newContent = newsItem.querySelector('.edit-content').value.trim();
+                        
+                        if (!newTitle || !newContent) {
+                            alert('Пожалуйста, заполните все поля');
+                            return;
+                        }
+                        
+                        updateNews(item.id, newTitle, newContent);
+                        editForm.style.display = 'none';
+                    });
+                });
+            }
+            
+            // Функция удаления новости
+            function deleteNews(id) {
+                if (confirm('Вы уверены, что хотите удалить эту новость?')) {
+                    let news = getNewsFromStorage();
+                    news = news.filter(item => item.id !== id);
+                    saveNewsToStorage(news);
+                    loadNews();
+                }
+            }
+            
+            // Функция обновления новости
+            function updateNews(id, newTitle, newContent) {
+                let news = getNewsFromStorage();
+                const index = news.findIndex(item => item.id === id);
+                
+                if (index !== -1) {
+                    news[index] = {
+                        ...news[index],
+                        title: newTitle,
+                        content: newContent,
+                        date: new Date().toISOString() // Обновляем дату при редактировании
+                    };
+                    
+                    saveNewsToStorage(news);
+                    loadNews();
+                }
+            }
+            
+            // Вспомогательные функции для работы с LocalStorage
+            function getNewsFromStorage() {
+                const newsJson = localStorage.getItem('news');
+                return newsJson ? JSON.parse(newsJson) : [];
+            }
+            
+            function saveNewsToStorage(news) {
+                localStorage.setItem('news', JSON.stringify(news));
+            }
+        });
+    </script>
+</body>
+</html>
