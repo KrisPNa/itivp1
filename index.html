@@ -147,7 +147,9 @@
         }
 
         .news-form input,
-        .news-form textarea {
+        .news-form textarea,
+        .edit-form input,
+        .edit-form textarea   {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
@@ -156,12 +158,14 @@
             box-sizing: border-box;
         }
 
-        .news-form textarea {
+        .news-form textarea,
+        .edit-form textarea  {
             min-height: 100px;
             resize: vertical;
         }
 
-        .news-form button {
+        .news-form button, 
+        .edit-form button{
             background-color: #4f5fed;
             color: white;
             padding: 10px 15px;
@@ -169,9 +173,11 @@
             border-radius: 4px;
             cursor: pointer;
             width: 100%;
+            margin:5px;
         }
 
-        .news-form button:hover {
+        .news-form button:hover,
+        .edit-form button:hover {
             background-color: #3a4bd1;
         }
 
@@ -591,8 +597,8 @@
                     
                     newsItem.innerHTML = `
                         <div class="actions">
-                            <button class="edit-btn" title="Редактировать">✏️</button>
-                            <button class="delete-btn" title="Удалить">🗑️</button>
+                            <button class="edit-btn" title="Редактировать">Редактировать</button>
+                            <button class="delete-btn" title="Удалить">Удалить</button>
                         </div>
                         <h3>${item.title}</h3>
                         <p>${item.content}</p>
