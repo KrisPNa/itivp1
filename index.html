@@ -29,24 +29,20 @@
             overflow: hidden;
         }
 
-        /* header h1 {
-            margin: 0;
-        } */
-
         /* Стили для навигации */
         .main-nav {
-        display: flex;
-      }
+            display: flex;
+        }
 
-      nav a {
-        color: white;
-        text-decoration: none;
-        margin: 0 15px;
-      }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
 
-      nav a:hover {
-        text-decoration: underline;
-      }
+        nav a:hover {
+            text-decoration: underline;
+        }
 
         .container {
             padding: 20px;
@@ -75,34 +71,34 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* Стили для секции категорий (CSS Grid) - ИЗМЕНЕНО */
+        /* Стили для секции категорий (CSS Grid) */
         .categories {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Уменьшаем минимальную ширину */
-            grid-gap: 15px; /* Уменьшаем отступы */
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-gap: 15px;
             padding: 20px;
         }
 
         .category {
             text-align: center;
-            padding: 10px; /* Уменьшаем отступы */
-            border: 2px solid #4f5fed; /* Добавляем обводку */
-            border-radius: 25px; /* Скругляем углы */
+            padding: 10px;
+            border: 2px solid #4f5fed;
+            border-radius: 25px;
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease; /* Для плавного эффекта */
+            transition: all 0.3s ease;
         }
 
         .category a {
             text-decoration: none;
             color: #333;
             display: block;
-            font-size: 0.9em; /* Уменьшаем размер шрифта */
+            font-size: 0.9em;
         }
 
         .category a:hover {
             color: #fff;
-            background-color: #4f5fed; /* Меняем цвет фона при наведении */
+            background-color: #4f5fed;
         }
 
         footer {
@@ -129,66 +125,83 @@
             background: #f9f9f9;
             border-radius: 10px;
         }
-        
+
+        .admin-panel {
+            background: #e9f5ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #cce0ff;
+        }
+
         .news-form {
             background: #f5f5f5;
             padding: 20px;
             border-radius: 5px;
             margin-bottom: 20px;
+            display: none;
         }
-        
-        .news-form input, .news-form textarea {
+
+        .admin-mode .news-form {
+            display: block;
+        }
+
+        .news-form input,
+        .news-form textarea {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
+            padding: 10px;
+            margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
         }
-        
+
+        .news-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
         .news-form button {
-            background: #4f5fed;
+            background-color: #4f5fed;
             color: white;
-            border: none;
             padding: 10px 15px;
+            border: none;
             border-radius: 4px;
             cursor: pointer;
             width: 100%;
         }
-        
+
         .news-form button:hover {
-            background: #3a4bd1;
+            background-color: #3a4bd1;
         }
-        
+
         .controls {
             margin-bottom: 20px;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 10px;
+            gap: 15px;
         }
-        
+
         .search-box {
-            padding: 8px;
+            padding: 10px;
             flex-grow: 1;
             min-width: 200px;
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-        
+
         .sort-options {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
         }
-        
-        .sort-options select, .sort-options button {
-            padding: 8px;
+
+        .sort-options select {
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            background: white;
         }
-        
+
         .news-item {
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -197,40 +210,44 @@
             position: relative;
             background: white;
         }
-        
+
         .news-item h3 {
             margin-top: 0;
             color: #4f5fed;
         }
-        
+
         .news-item p {
             margin-bottom: 10px;
         }
-        
+
         .news-item .date {
             color: #666;
             font-size: 0.9em;
         }
-        
+
         .news-item .actions {
             position: absolute;
             top: 15px;
             right: 15px;
+            display: none;
         }
-        
+
+        .admin-mode .news-item .actions {
+            display: block;
+        }
+
         .news-item .actions button {
             background: none;
             border: none;
             cursor: pointer;
             margin-left: 5px;
             color: #666;
-            font-size: 1em;
         }
-        
+
         .news-item .actions button:hover {
             color: #4f5fed;
         }
-        
+
         .edit-form {
             display: none;
             margin-top: 15px;
@@ -238,37 +255,10 @@
             background: #f9f9f9;
             border-radius: 5px;
         }
-        
-        .edit-form input, .edit-form textarea {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        
-        .edit-form button {
-            padding: 8px 15px;
-            margin-right: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        
-        .save-edit-btn {
-            background: #4f5fed;
-            color: white;
-        }
-        
-        .cancel-edit-btn {
-            background: #f5f5f5;
-            color: #333;
-        }
 
         /* Медиа-запрос для мобильных устройств */
         @media (max-width: 768px) {
-            /* Показываем кнопку бургер-меню */
+            /* Бургер-меню */
             .burger-menu-button {
                 display: block;
                 cursor: pointer;
@@ -299,7 +289,7 @@
                 font-size: 1.2em;
             }
 
-            /* Адаптация секции .home на мобильных устройствах */
+            /* Адаптация секций */
             .home h2 {
                 font-size: 2em;
             }
@@ -308,7 +298,6 @@
                 font-size: 1em;
             }
 
-            /* Адаптация секции категорий на мобильных устройствах */
             .categories {
                 grid-template-columns: 1fr;
                 padding: 10px;
@@ -317,31 +306,32 @@
             .category {
                 padding: 10px;
             }
-            
-            /* Адаптация новостной системы на мобильных устройствах */
+
+            /* Адаптация новостной системы */
             .controls {
                 flex-direction: column;
             }
-            
+
             .search-box {
                 width: 100%;
             }
-            
+
             .sort-options {
                 width: 100%;
             }
-            
-            .sort-options select, .sort-options button {
+
+            .sort-options select {
                 width: 100%;
             }
-            
+
             .news-item .actions {
                 position: static;
                 margin-bottom: 10px;
                 text-align: right;
             }
-            
-            .news-form button, .edit-form button {
+
+            .news-form button, 
+            .edit-form button {
                 width: 100%;
                 margin-bottom: 10px;
             }
@@ -393,20 +383,34 @@
                 <a href="sportivnye_kostyumy.html">Спорт</a>
             </div>
         </div>
-        
+
         <!-- Новостная система -->
         <div class="news-system">
             <h2>Новости магазина</h2>
             
+            <!-- Панель администратора -->
+            <div class="admin-panel">
+                <div id="login-section">
+                    <input type="password" id="admin-password" placeholder="Пароль администратора">
+                    <button id="login-btn">Войти</button>
+                </div>
+                <div id="logout-section" style="display: none;">
+                    <p>Вы вошли как администратор</p>
+                    <button id="logout-btn">Выйти</button>
+                </div>
+            </div>
+            
+            <!-- Форма добавления новости (видна только админу) -->
             <div class="news-form">
                 <h3>Добавить новость</h3>
                 <input type="text" id="news-title" placeholder="Заголовок новости" required>
-                <textarea id="news-content" rows="4" placeholder="Содержание новости" required></textarea>
-                <button id="add-news-btn">Добавить новость</button>
+                <textarea id="news-content" placeholder="Содержание новости" required></textarea>
+                <button id="add-news-btn">Опубликовать новость</button>
             </div>
             
+            <!-- Управление новостями -->
             <div class="controls">
-                <input type="text" id="search-news" class="search-box" placeholder="Поиск новостей...">
+                <input type="text" id="search-news" class="search-box" placeholder="Поиск по новостям...">
                 <div class="sort-options">
                     <select id="sort-by">
                         <option value="date-desc">Сначала новые</option>
@@ -414,10 +418,10 @@
                         <option value="title-asc">По названию (А-Я)</option>
                         <option value="title-desc">По названию (Я-А)</option>
                     </select>
-                    <button id="clear-storage">Очистить все</button>
                 </div>
             </div>
             
+            <!-- Контейнер для новостей -->
             <div id="news-container"></div>
         </div>
     </div>
@@ -426,7 +430,7 @@
         <p style="text-align: left; padding-left: 20px">
             &copy; 2025 Магазин одежды. Все права защищены.</p>
     </footer>
-    
+
     <script>
         // Бургер-меню
         const burgerButton = document.querySelector('.burger-menu-button');
@@ -435,9 +439,12 @@
         burgerButton.addEventListener('click', () => {
             nav.classList.toggle('nav-active');
         });
-        
+
         // Новостная система
         document.addEventListener('DOMContentLoaded', function() {
+            // Константы
+            const ADMIN_PASSWORD = "qwer1234"; // Пароль администратора
+            
             // Элементы DOM
             const newsContainer = document.getElementById('news-container');
             const newsTitleInput = document.getElementById('news-title');
@@ -445,27 +452,56 @@
             const addNewsBtn = document.getElementById('add-news-btn');
             const searchInput = document.getElementById('search-news');
             const sortSelect = document.getElementById('sort-by');
-            const clearStorageBtn = document.getElementById('clear-storage');
+            const adminPasswordInput = document.getElementById('admin-password');
+            const loginBtn = document.getElementById('login-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            const loginSection = document.getElementById('login-section');
+            const logoutSection = document.getElementById('logout-section');
             
-            // Загрузка новостей при загрузке страницы
+            // Проверка авторизации при загрузке
+            checkAuth();
+            
+            // Загрузка новостей
             loadNews();
             
-            // Добавление новости
+            // События
             addNewsBtn.addEventListener('click', addNews);
-            
-            // Поиск новостей
             searchInput.addEventListener('input', loadNews);
-            
-            // Сортировка новостей
             sortSelect.addEventListener('change', loadNews);
+            loginBtn.addEventListener('click', loginAdmin);
+            logoutBtn.addEventListener('click', logoutAdmin);
             
-            // Очистка хранилища
-            clearStorageBtn.addEventListener('click', function() {
-                if (confirm('Вы уверены, что хотите удалить все новости?')) {
-                    localStorage.removeItem('news');
-                    loadNews();
+            // Функция проверки авторизации
+            function checkAuth() {
+                if (localStorage.getItem('adminAuth') === 'true') {
+                    document.body.classList.add('admin-mode');
+                    loginSection.style.display = 'none';
+                    logoutSection.style.display = 'block';
+                } else {
+                    document.body.classList.remove('admin-mode');
+                    loginSection.style.display = 'block';
+                    logoutSection.style.display = 'none';
                 }
-            });
+            }
+            
+            // Функция входа администратора
+            function loginAdmin() {
+                if (adminPasswordInput.value === ADMIN_PASSWORD) {
+                    localStorage.setItem('adminAuth', 'true');
+                    checkAuth();
+                    adminPasswordInput.value = '';
+                    alert('Вы успешно вошли как администратор');
+                } else {
+                    alert('Неверный пароль!');
+                }
+            }
+            
+            // Функция выхода администратора
+            function logoutAdmin() {
+                localStorage.removeItem('adminAuth');
+                checkAuth();
+                alert('Вы вышли из режима администратора');
+            }
             
             // Функция добавления новости
             function addNews() {
@@ -488,11 +524,11 @@
                 news.unshift(newsItem);
                 saveNewsToStorage(news);
                 
-                // Очистка полей ввода
+                // Очистка формы
                 newsTitleInput.value = '';
                 newsContentInput.value = '';
                 
-                // Перезагрузка новостей
+                // Обновление списка
                 loadNews();
             }
             
@@ -530,7 +566,7 @@
                 renderNews(news);
             }
             
-            // Функция рендеринга новостей
+            // Функция отображения новостей
             function renderNews(news) {
                 newsContainer.innerHTML = '';
                 
@@ -545,7 +581,13 @@
                     newsItem.dataset.id = item.id;
                     
                     const date = new Date(item.date);
-                    const formattedDate = date.toLocaleString('ru-RU');
+                    const formattedDate = date.toLocaleString('ru-RU', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
                     
                     newsItem.innerHTML = `
                         <div class="actions">
@@ -554,10 +596,10 @@
                         </div>
                         <h3>${item.title}</h3>
                         <p>${item.content}</p>
-                        <div class="date">${formattedDate}</div>
+                        <div class="date">Опубликовано: ${formattedDate}</div>
                         <div class="edit-form" id="edit-form-${item.id}">
                             <input type="text" class="edit-title" value="${item.title}" required>
-                            <textarea class="edit-content" rows="4" required>${item.content}</textarea>
+                            <textarea class="edit-content" required>${item.content}</textarea>
                             <button class="save-edit-btn">Сохранить</button>
                             <button class="cancel-edit-btn">Отмена</button>
                         </div>
@@ -565,32 +607,30 @@
                     
                     newsContainer.appendChild(newsItem);
                     
-                    // Добавление обработчиков для кнопок
-                    const deleteBtn = newsItem.querySelector('.delete-btn');
-                    const editBtn = newsItem.querySelector('.edit-btn');
-                    const saveEditBtn = newsItem.querySelector('.save-edit-btn');
-                    const cancelEditBtn = newsItem.querySelector('.cancel-edit-btn');
-                    const editForm = newsItem.querySelector('.edit-form');
-                    
-                    deleteBtn.addEventListener('click', () => deleteNews(item.id));
-                    editBtn.addEventListener('click', () => {
-                        editForm.style.display = 'block';
-                    });
-                    cancelEditBtn.addEventListener('click', () => {
-                        editForm.style.display = 'none';
-                    });
-                    saveEditBtn.addEventListener('click', () => {
-                        const newTitle = newsItem.querySelector('.edit-title').value.trim();
-                        const newContent = newsItem.querySelector('.edit-content').value.trim();
+                    // Добавление обработчиков для админа
+                    if (localStorage.getItem('adminAuth') === 'true') {
+                        const deleteBtn = newsItem.querySelector('.delete-btn');
+                        const editBtn = newsItem.querySelector('.edit-btn');
+                        const saveEditBtn = newsItem.querySelector('.save-edit-btn');
+                        const cancelEditBtn = newsItem.querySelector('.cancel-edit-btn');
+                        const editForm = newsItem.querySelector('.edit-form');
                         
-                        if (!newTitle || !newContent) {
-                            alert('Пожалуйста, заполните все поля');
-                            return;
-                        }
-                        
-                        updateNews(item.id, newTitle, newContent);
-                        editForm.style.display = 'none';
-                    });
+                        deleteBtn.addEventListener('click', () => deleteNews(item.id));
+                        editBtn.addEventListener('click', () => editForm.style.display = 'block');
+                        cancelEditBtn.addEventListener('click', () => editForm.style.display = 'none');
+                        saveEditBtn.addEventListener('click', () => {
+                            const newTitle = newsItem.querySelector('.edit-title').value.trim();
+                            const newContent = newsItem.querySelector('.edit-content').value.trim();
+                            
+                            if (!newTitle || !newContent) {
+                                alert('Пожалуйста, заполните все поля');
+                                return;
+                            }
+                            
+                            updateNews(item.id, newTitle, newContent);
+                            editForm.style.display = 'none';
+                        });
+                    }
                 });
             }
             
@@ -614,7 +654,7 @@
                         ...news[index],
                         title: newTitle,
                         content: newContent,
-                        date: new Date().toISOString() // Обновляем дату при редактировании
+                        date: new Date().toISOString()
                     };
                     
                     saveNewsToStorage(news);
