@@ -599,19 +599,7 @@
                     );
                 }
                 
-                // Фильтрация по дате
-                const startDate = startDateInput.value;
-                const endDate = endDateInput.value;
-                
-                if (startDate || endDate) {
-                    news = news.filter(item => {
-                        const newsDate = new Date(item.date).setHours(0, 0, 0, 0);
-                        const filterStartDate = startDate ? new Date(startDate).setHours(0, 0, 0, 0) : -Infinity;
-                        const filterEndDate = endDate ? new Date(endDate).setHours(23, 59, 59, 999) : Infinity;
-                        
-                        return newsDate >= filterStartDate && newsDate <= filterEndDate;
-                    });
-                }
+              
                 
                 // Сортировка
                 const sortOption = sortSelect.value;
