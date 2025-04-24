@@ -703,12 +703,12 @@
                         });
                         
                         editContentInput.addEventListener('input', function() {
-                            validateEditInput(editContentInput, editContentError, 10);
+                            validateEditInput(editContentInput, editContentError, 10,30);
                         });
                         
                         saveEditBtn.addEventListener('click', () => {
                             const isTitleValid = validateEditInput(editTitleInput, editTitleError, 2, 30);
-                            const isContentValid = validateEditInput(editContentInput, editContentError, 10);
+                            const isContentValid = validateEditInput(editContentInput, editContentError, 10,30);
                             
                             if (!isTitleValid || !isContentValid) {
                                 return;
@@ -737,7 +737,12 @@
                     input.classList.add('input-error');
                     errorElement.textContent = `Поле не должно превышать ${maxLength} символов`;
                     return false;
-                } else if (!regex.test(value)) {
+                } 
+                else if (input === editTitleInput && value.length > 30) {
+    input.classList.add('input-error');
+    errorElement.textContent = 'Заголовок не должен превышать 30 символов';
+    return false;
+}else if (!regex.test(value)) {
                     input.classList.add('input-error');
                     errorElement.textContent = 'Можно использовать только буквы, цифры и знаки препинания';
                     return false;
