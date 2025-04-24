@@ -724,7 +724,11 @@
                     input.classList.add('input-error');
                     errorElement.textContent = `Поле должно содержать минимум ${minLength} символа`;
                     return false;
-                } else if (!regex.test(value)) {
+                } 
+                 else if (value.length > 30) {
+    showError(newsTitleInput, titleError, 'Заголовок не должен превышать 30 символов');
+    return false;
+}else if (!regex.test(value)) {
                     input.classList.add('input-error');
                     errorElement.textContent = 'Можно использовать только буквы, цифры и знаки препинания';
                     return false;
