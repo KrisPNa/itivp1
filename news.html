@@ -510,25 +510,7 @@ function validateContent() {
     }
 }
             
-            // Функция валидации содержания
-            function validateContent() {
-    const value = newsContentInput.value.trim();
-    const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?\n-]+$/;
     
-    if (value.length < 10) {
-        showError(newsContentInput, contentError, 'Содержание должно быть не менее 10 символов');
-        return false;
-    } else if (value.length > 50) {
-        showError(newsContentInput, contentError, 'Содержание не должно превышать 50 символов');
-        return false;
-    } else if (!regex.test(value)) {
-        showError(newsContentInput, contentError, 'Можно использовать только буквы, цифры и знаки препинания');
-        return false;
-    } else {
-        clearError(newsContentInput, contentError);
-        return true;
-    }
-}
             
             // Показать ошибку
             function showError(input, errorElement, message) {
