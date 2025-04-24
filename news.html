@@ -371,7 +371,7 @@
                 <h3>Добавить новость</h3>
                 <input type="text" id="news-title" placeholder="Заголовок новости (2-30 символов)" maxlength="30" required>
                 <div id="title-error" class="error-message"></div>
-                <textarea id="news-content" placeholder="Содержание новости (минимум 10 символов)" required></textarea>
+                <textarea id="news-content" placeholder="Содержание новости (10-50 символов)" maxlength="50" required></textarea>
                 <div id="content-error" class="error-message"></div>
                 <button id="add-news-btn">Опубликовать новость</button>
             </div>
@@ -493,20 +493,23 @@
             
             // Функция валидации содержания
             function validateContent() {
-                const value = newsContentInput.value.trim();
-                const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?\n-]+$/;
-                
-                if (value.length < 10) {
-                    showError(newsContentInput, contentError, 'Содержание должно быть не менее 10 символов');
-                    return false;
-                } else if (!regex.test(value)) {
-                    showError(newsContentInput, contentError, 'Можно использовать только буквы, цифры и знаки препинания');
-                    return false;
-                } else {
-                    clearError(newsContentInput, contentError);
-                    return true;
-                }
-            }
+    const value = newsContentInput.value.trim();
+    const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?\n-]+$/;
+    
+    if (value.length < 10) {
+        showError(newsContentInput, contentError, 'Содержание должно быть не менее 10 символов');
+        return false;
+    } else if (value.length > 50) {
+        showError(newsContentInput, contentError, 'Содержание не должно превышать 50 символов');
+        return false;
+    } else if (!regex.test(value)) {
+        showError(newsContentInput, contentError, 'Можно использовать только буквы, цифры и знаки препинания');
+        return false;
+    } else {
+        clearError(newsContentInput, contentError);
+        return true;
+    }
+}
             
             // Показать ошибку
             function showError(input, errorElement, message) {
@@ -672,7 +675,7 @@
                         <div class="edit-form" id="edit-form-${item.id}">
                             <input type="text" class="edit-title" value="${item.title}" maxlength="30" required>
                             <div class="edit-title-error error-message"></div>
-                            <textarea class="edit-content" required>${item.content}</textarea>
+                            <textarea class="edit-content" maxlength="50" required>${item.content}</textarea>
                             <div class="edit-content-error error-message"></div>
                             <button class="save-edit-btn">Сохранить</button>
                             <button class="cancel-edit-btn">Отмена</button>
