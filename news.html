@@ -291,6 +291,43 @@
                 margin-bottom: 10px;
             }
         }
+         .error-message {
+            color: #d32f2f;
+            font-size: 0.8em;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+        
+        .input-error {
+            border-color: #d32f2f !important;
+        }
+        
+        .date-range-picker {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .date-range-picker input[type="date"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .date-range-picker button {
+            padding: 8px 15px;
+            background-color: #4f5fed;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .date-range-picker button:hover {
+            background-color: #3a4bd1;
+        }
     </style>
 </head>
 
@@ -311,7 +348,7 @@
         </nav>
     </header>
 
-    <div class="container">
+   <div class="container">
         <a href="index.html" class="back-link">← Назад на главную</a>
         <h2 class="page-title">Новости магазина</h2>
         
@@ -332,14 +369,16 @@
             <!-- Форма добавления новости (видна только админу) -->
             <div class="news-form">
                 <h3>Добавить новость</h3>
-                <input type="text" id="news-title" placeholder="Заголовок новости" required>
-                <textarea id="news-content" placeholder="Содержание новости" required></textarea>
+                <input type="text" id="news-title" placeholder="Заголовок новости (минимум 2 символа)" required>
+                <div id="title-error" class="error-message"></div>
+                <textarea id="news-content" placeholder="Содержание новости (минимум 10 символов)" required></textarea>
+                <div id="content-error" class="error-message"></div>
                 <button id="add-news-btn">Опубликовать новость</button>
             </div>
             
             <!-- Управление новостями -->
             <div class="controls">
-                <input type="text" id="search-news" class="search-box" placeholder="Поиск по новостям...">
+                <input type="text" id="search-news" class="search-box" placeholder="Поиск по тексту новостей...">
                 <div class="sort-options">
                     <select id="sort-by">
                         <option value="date-desc">Сначала новые</option>
@@ -347,6 +386,20 @@
                         <option value="title-asc">По названию (А-Я)</option>
                         <option value="title-desc">По названию (Я-А)</option>
                     </select>
+                </div>
+                
+                <!-- Фильтр по дате -->
+                <div class="date-range-picker">
+                    <div>
+                        <label for="start-date">От:</label>
+                        <input type="date" id="start-date">
+                    </div>
+                    <div>
+                        <label for="end-date">До:</label>
+                        <input type="date" id="end-date">
+                    </div>
+                    <button id="apply-date-filter">Применить</button>
+                    <button id="clear-date-filter">Сбросить</button>
                 </div>
             </div>
             
@@ -361,7 +414,7 @@
     </footer>
 
     <script>
-        // Бургер-меню
+        // Бургер-меню (без изменений)
         const burgerButton = document.querySelector('.burger-menu-button');
         const nav = document.querySelector('.main-nav');
   
@@ -386,6 +439,12 @@
             const logoutBtn = document.getElementById('logout-btn');
             const loginSection = document.getElementById('login-section');
             const logoutSection = document.getElementById('logout-section');
+            const titleError = document.getElementById('title-error');
+            const contentError = document.getElementById('content-error');
+            const startDateInput = document.getElementById('start-date');
+            const endDateInput = document.getElementById('end-date');
+            const applyDateFilterBtn = document.getElementById('apply-date-filter');
+            const clearDateFilterBtn = document.getElementById('clear-date-filter');
             
             // Проверка авторизации при загрузке
             checkAuth();
@@ -399,6 +458,58 @@
             sortSelect.addEventListener('change', loadNews);
             loginBtn.addEventListener('click', loginAdmin);
             logoutBtn.addEventListener('click', logoutAdmin);
+            applyDateFilterBtn.addEventListener('click', loadNews);
+            clearDateFilterBtn.addEventListener('click', clearDateFilter);
+            
+            // Валидация ввода
+            newsTitleInput.addEventListener('input', validateTitle);
+            newsContentInput.addEventListener('input', validateContent);
+            
+            // Функция валидации заголовка
+            function validateTitle() {
+                const value = newsTitleInput.value.trim();
+                const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?-]+$/;
+                
+                if (value.length < 2) {
+                    showError(newsTitleInput, titleError, 'Заголовок должен содержать минимум 2 символа');
+                    return false;
+                } else if (!regex.test(value)) {
+                    showError(newsTitleInput, titleError, 'Можно использовать только буквы, цифры и знаки препинания');
+                    return false;
+                } else {
+                    clearError(newsTitleInput, titleError);
+                    return true;
+                }
+            }
+            
+            // Функция валидации содержания
+            function validateContent() {
+                const value = newsContentInput.value.trim();
+                const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?\n-]+$/;
+                
+                if (value.length < 10) {
+                    showError(newsContentInput, contentError, 'Содержание должно быть не менее 10 символов');
+                    return false;
+                } else if (!regex.test(value)) {
+                    showError(newsContentInput, contentError, 'Можно использовать только буквы, цифры и знаки препинания');
+                    return false;
+                } else {
+                    clearError(newsContentInput, contentError);
+                    return true;
+                }
+            }
+            
+            // Показать ошибку
+            function showError(input, errorElement, message) {
+                input.classList.add('input-error');
+                errorElement.textContent = message;
+            }
+            
+            // Скрыть ошибку
+            function clearError(input, errorElement) {
+                input.classList.remove('input-error');
+                errorElement.textContent = '';
+            }
             
             // Функция проверки авторизации
             function checkAuth() {
@@ -434,13 +545,15 @@
             
             // Функция добавления новости
             function addNews() {
-                const title = newsTitleInput.value.trim();
-                const content = newsContentInput.value.trim();
+                const isTitleValid = validateTitle();
+                const isContentValid = validateContent();
                 
-                if (!title || !content) {
-                    alert('Пожалуйста, заполните все поля');
+                if (!isTitleValid || !isContentValid) {
                     return;
                 }
+                
+                const title = newsTitleInput.value.trim();
+                const content = newsContentInput.value.trim();
                 
                 const newsItem = {
                     id: Date.now(),
@@ -465,13 +578,27 @@
             function loadNews() {
                 let news = getNewsFromStorage();
                 
-                // Поиск
+                // Поиск по тексту
                 const searchTerm = searchInput.value.toLowerCase();
                 if (searchTerm) {
                     news = news.filter(item => 
                         item.title.toLowerCase().includes(searchTerm) || 
                         item.content.toLowerCase().includes(searchTerm)
                     );
+                }
+                
+                // Фильтрация по дате
+                const startDate = startDateInput.value;
+                const endDate = endDateInput.value;
+                
+                if (startDate || endDate) {
+                    news = news.filter(item => {
+                        const newsDate = new Date(item.date).setHours(0, 0, 0, 0);
+                        const filterStartDate = startDate ? new Date(startDate).setHours(0, 0, 0, 0) : -Infinity;
+                        const filterEndDate = endDate ? new Date(endDate).setHours(23, 59, 59, 999) : Infinity;
+                        
+                        return newsDate >= filterStartDate && newsDate <= filterEndDate;
+                    });
                 }
                 
                 // Сортировка
@@ -493,6 +620,13 @@
                 
                 // Отображение
                 renderNews(news);
+            }
+            
+            // Функция очистки фильтра по дате
+            function clearDateFilter() {
+                startDateInput.value = '';
+                endDateInput.value = '';
+                loadNews();
             }
             
             // Функция отображения новостей
@@ -528,7 +662,9 @@
                         <div class="date">Опубликовано: ${formattedDate}</div>
                         <div class="edit-form" id="edit-form-${item.id}">
                             <input type="text" class="edit-title" value="${item.title}" required>
+                            <div class="edit-title-error error-message"></div>
                             <textarea class="edit-content" required>${item.content}</textarea>
+                            <div class="edit-content-error error-message"></div>
                             <button class="save-edit-btn">Сохранить</button>
                             <button class="cancel-edit-btn">Отмена</button>
                         </div>
@@ -543,24 +679,60 @@
                         const saveEditBtn = newsItem.querySelector('.save-edit-btn');
                         const cancelEditBtn = newsItem.querySelector('.cancel-edit-btn');
                         const editForm = newsItem.querySelector('.edit-form');
+                        const editTitleInput = newsItem.querySelector('.edit-title');
+                        const editContentInput = newsItem.querySelector('.edit-content');
+                        const editTitleError = newsItem.querySelector('.edit-title-error');
+                        const editContentError = newsItem.querySelector('.edit-content-error');
                         
                         deleteBtn.addEventListener('click', () => deleteNews(item.id));
                         editBtn.addEventListener('click', () => editForm.style.display = 'block');
                         cancelEditBtn.addEventListener('click', () => editForm.style.display = 'none');
+                        
+                        // Валидация при редактировании
+                        editTitleInput.addEventListener('input', function() {
+                            validateEditInput(editTitleInput, editTitleError, 2);
+                        });
+                        
+                        editContentInput.addEventListener('input', function() {
+                            validateEditInput(editContentInput, editContentError, 10);
+                        });
+                        
                         saveEditBtn.addEventListener('click', () => {
-                            const newTitle = newsItem.querySelector('.edit-title').value.trim();
-                            const newContent = newsItem.querySelector('.edit-content').value.trim();
+                            const isTitleValid = validateEditInput(editTitleInput, editTitleError, 2);
+                            const isContentValid = validateEditInput(editContentInput, editContentError, 10);
                             
-                            if (!newTitle || !newContent) {
-                                alert('Пожалуйста, заполните все поля');
+                            if (!isTitleValid || !isContentValid) {
                                 return;
                             }
+                            
+                            const newTitle = editTitleInput.value.trim();
+                            const newContent = editContentInput.value.trim();
                             
                             updateNews(item.id, newTitle, newContent);
                             editForm.style.display = 'none';
                         });
                     }
                 });
+            }
+            
+            // Валидация при редактировании
+            function validateEditInput(input, errorElement, minLength) {
+                const value = input.value.trim();
+                const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?\n-]+$/;
+                
+                if (value.length < minLength) {
+                    input.classList.add('input-error');
+                    errorElement.textContent = `Поле должно содержать минимум ${minLength} символа`;
+                    return false;
+                } else if (!regex.test(value)) {
+                    input.classList.add('input-error');
+                    errorElement.textContent = 'Можно использовать только буквы, цифры и знаки препинания';
+                    return false;
+                } else {
+                    input.classList.remove('input-error');
+                    errorElement.textContent = '';
+                    return true;
+                }
             }
             
             // Функция удаления новости
