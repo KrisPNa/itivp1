@@ -369,7 +369,7 @@
             <!-- Форма добавления новости (видна только админу) -->
             <div class="news-form">
                 <h3>Добавить новость</h3>
-                <input type="text" id="news-title" placeholder="Заголовок новости (минимум 2 символа)" required>
+                <input type="text" id="news-title" placeholder="Заголовок новости (2-30 символов)" maxlength="30" required>
                 <div id="title-error" class="error-message"></div>
                 <textarea id="news-content" placeholder="Содержание новости (минимум 10 символов)" required></textarea>
                 <div id="content-error" class="error-message"></div>
@@ -414,7 +414,7 @@
     </footer>
 
     <script>
-        // Бургер-меню (без изменений)
+        // Бургер-меню
         const burgerButton = document.querySelector('.burger-menu-button');
         const nav = document.querySelector('.main-nav');
   
@@ -472,6 +472,9 @@
                 
                 if (value.length < 2) {
                     showError(newsTitleInput, titleError, 'Заголовок должен содержать минимум 2 символа');
+                    return false;
+                } else if (value.length > 30) {
+                    showError(newsTitleInput, titleError, 'Заголовок не должен превышать 30 символов');
                     return false;
                 } else if (!regex.test(value)) {
                     showError(newsTitleInput, titleError, 'Можно использовать только буквы, цифры и знаки препинания');
@@ -661,7 +664,7 @@
                         <p>${item.content}</p>
                         <div class="date">Опубликовано: ${formattedDate}</div>
                         <div class="edit-form" id="edit-form-${item.id}">
-                            <input type="text" class="edit-title" value="${item.title}" required>
+                            <input type="text" class="edit-title" value="${item.title}" maxlength="30" required>
                             <div class="edit-title-error error-message"></div>
                             <textarea class="edit-content" required>${item.content}</textarea>
                             <div class="edit-content-error error-message"></div>
@@ -690,7 +693,7 @@
                         
                         // Валидация при редактировании
                         editTitleInput.addEventListener('input', function() {
-                            validateEditInput(editTitleInput, editTitleError, 2);
+                            validateEditInput(editTitleInput, editTitleError, 2, 30);
                         });
                         
                         editContentInput.addEventListener('input', function() {
@@ -698,7 +701,7 @@
                         });
                         
                         saveEditBtn.addEventListener('click', () => {
-                            const isTitleValid = validateEditInput(editTitleInput, editTitleError, 2);
+                            const isTitleValid = validateEditInput(editTitleInput, editTitleError, 2, 30);
                             const isContentValid = validateEditInput(editContentInput, editContentError, 10);
                             
                             if (!isTitleValid || !isContentValid) {
@@ -716,7 +719,7 @@
             }
             
             // Валидация при редактировании
-            function validateEditInput(input, errorElement, minLength) {
+            function validateEditInput(input, errorElement, minLength, maxLength = null) {
                 const value = input.value.trim();
                 const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?\n-]+$/;
                 
@@ -724,11 +727,11 @@
                     input.classList.add('input-error');
                     errorElement.textContent = `Поле должно содержать минимум ${minLength} символа`;
                     return false;
-                } 
-                 else if (value.length > 30) {
-    showError(newsTitleInput, titleError, 'Заголовок не должен превышать 30 символов');
-    return false;
-}else if (!regex.test(value)) {
+                } else if (maxLength && value.length > maxLength) {
+                    input.classList.add('input-error');
+                    errorElement.textContent = `Поле не должно превышать ${maxLength} символов`;
+                    return false;
+                } else if (!regex.test(value)) {
                     input.classList.add('input-error');
                     errorElement.textContent = 'Можно использовать только буквы, цифры и знаки препинания';
                     return false;
