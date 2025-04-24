@@ -328,6 +328,19 @@
         .date-range-picker button:hover {
             background-color: #3a4bd1;
         }
+        
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+        }
+        
+        .search-error {
+            position: absolute;
+            bottom: -18px;
+            left: 0;
+            color: #d32f2f;
+            font-size: 0.8em;
+        }
     </style>
 </head>
 
@@ -378,7 +391,10 @@
             
             <!-- Управление новостями -->
             <div class="controls">
-                <input type="text" id="search-news" class="search-box" placeholder="Поиск по тексту новостей...">
+                <div class="search-container">
+                    <input type="text" id="search-news" class="search-box" placeholder="Поиск по тексту новостей (макс. 20 символов)" maxlength="20">
+                    <div id="search-error" class="search-error"></div>
+                </div>
                 <div class="sort-options">
                     <select id="sort-by">
                         <option value="date-desc">Сначала новые</option>
@@ -387,8 +403,6 @@
                         <option value="title-desc">По названию (Я-А)</option>
                     </select>
                 </div>
-                
-                
             </div>
             
             <!-- Контейнер для новостей -->
@@ -400,7 +414,7 @@
       <p style="margin: 0;">&copy; 2025 Магазин одежды. Все права защищены.</p>
       <nav style="display: flex; gap: 20px;">
           <a href="index.html" style="color: white; text-decoration: none;">Главная</a>
-          <a href="news.html style="color: white; text-decoration: none;">Новости</a>
+          <a href="news.html" style="color: white; text-decoration: none;">Новости</a>
           <a href="contacts.html" style="color: white; text-decoration: none;">Контакты</a>
           <a href="about.html" style="color: white; text-decoration: none;">О нас</a>
           <a href="collection.html" style="color: white; text-decoration: none;">Коллекция</a>
@@ -435,10 +449,7 @@
             const logoutSection = document.getElementById('logout-section');
             const titleError = document.getElementById('title-error');
             const contentError = document.getElementById('content-error');
-            const startDateInput = document.getElementById('start-date');
-            const endDateInput = document.getElementById('end-date');
-            const applyDateFilterBtn = document.getElementById('apply-date-filter');
-            const clearDateFilterBtn = document.getElementById('clear-date-filter');
+            const searchError = document.getElementById('search-error');
             
             // Проверка авторизации при загрузке
             checkAuth();
@@ -448,69 +459,108 @@
             
             // События
             addNewsBtn.addEventListener('click', addNews);
-            searchInput.addEventListener('input', loadNews);
+            searchInput.addEventListener('input', handleSearchInput);
             sortSelect.addEventListener('change', loadNews);
             loginBtn.addEventListener('click', loginAdmin);
             logoutBtn.addEventListener('click', logoutAdmin);
-            applyDateFilterBtn.addEventListener('click', loadNews);
-            clearDateFilterBtn.addEventListener('click', clearDateFilter);
             
             // Валидация ввода
             newsTitleInput.addEventListener('input', validateTitle);
             newsContentInput.addEventListener('input', validateContent);
             
-            // Функция валидации заголовка
-            // Обновленная функция валидации заголовка
-function validateTitle() {
-    let value = newsTitleInput.value.trim();
-    // Заменяем множественные пробелы на один
-    value = value.replace(/\s+/g, ' ');
-    // Обновляем значение в поле ввода
-    newsTitleInput.value = value;
-    
-    const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?-]+$/;
-    
-    if (value.length < 2) {
-        showError(newsTitleInput, titleError, 'Заголовок должен содержать минимум 2 символа');
-        return false;
-    } else if (value.length > 30) {
-        showError(newsTitleInput, titleError, 'Заголовок не должен превышать 30 символов');
-        return false;
-    } else if (!regex.test(value)) {
-        showError(newsTitleInput, titleError, 'Можно использовать только буквы, цифры и знаки препинания');
-        return false;
-    } else {
-        clearError(newsTitleInput, titleError);
-        return true;
-    }
-}
-
-// Обновленная функция валидации содержания
-function validateContent() {
-    let value = newsContentInput.value.trim();
-    // Заменяем множественные пробелы на один
-    value = value.replace(/\s+/g, ' ');
-    // Обновляем значение в поле ввода
-    newsContentInput.value = value;
-    
-    const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?\n-]+$/;
-    
-    if (value.length < 10) {
-        showError(newsContentInput, contentError, 'Содержание должно быть не менее 10 символов');
-        return false;
-    } else if (value.length > 50) {
-        showError(newsContentInput, contentError, 'Содержание не должно превышать 50 символов');
-        return false;
-    } else if (!regex.test(value)) {
-        showError(newsContentInput, contentError, 'Можно использовать только буквы, цифры и знаки препинания');
-        return false;
-    } else {
-        clearError(newsContentInput, contentError);
-        return true;
-    }
-}
+            // Обработчик ввода для поиска
+            function handleSearchInput() {
+                // Удаляем пробелы в начале строки
+                if (/^\s/.test(this.value)) {
+                    this.value = this.value.trimStart();
+                    showSearchError('Поиск не может начинаться с пробела');
+                    return;
+                }
+                
+                // Проверка длины строки поиска
+                if (this.value.length > 20) {
+                    this.value = this.value.substring(0, 20);
+                    showSearchError('Максимальная длина поиска - 20 символов');
+                    return;
+                }
+                
+                clearSearchError();
+                loadNews();
+            }
             
-    
+            // Показать ошибку поиска
+            function showSearchError(message) {
+                searchInput.classList.add('input-error');
+                searchError.textContent = message;
+            }
+            
+            // Скрыть ошибку поиска
+            function clearSearchError() {
+                searchInput.classList.remove('input-error');
+                searchError.textContent = '';
+            }
+            
+            // Функция валидации заголовка
+            function validateTitle() {
+                let value = newsTitleInput.value.trim();
+                
+                // Проверка на пустую строку или строку, начинающуюся с пробела
+                if (value === '' || /^\s/.test(newsTitleInput.value)) {
+                    showError(newsTitleInput, titleError, 'Заголовок не может начинаться с пробела');
+                    return false;
+                }
+                
+                // Заменяем множественные пробелы на один
+                value = value.replace(/\s+/g, ' ');
+                newsTitleInput.value = value;
+                
+                const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?-]+$/;
+                
+                if (value.length < 2) {
+                    showError(newsTitleInput, titleError, 'Заголовок должен содержать минимум 2 символа');
+                    return false;
+                } else if (value.length > 30) {
+                    showError(newsTitleInput, titleError, 'Заголовок не должен превышать 30 символов');
+                    return false;
+                } else if (!regex.test(value)) {
+                    showError(newsTitleInput, titleError, 'Можно использовать только буквы, цифры и знаки препинания');
+                    return false;
+                } else {
+                    clearError(newsTitleInput, titleError);
+                    return true;
+                }
+            }
+            
+            // Функция валидации содержания
+            function validateContent() {
+                let value = newsContentInput.value.trim();
+                
+                // Проверка на пустую строку или строку, начинающуюся с пробела
+                if (value === '' || /^\s/.test(newsContentInput.value)) {
+                    showError(newsContentInput, contentError, 'Текст новости не может начинаться с пробела');
+                    return false;
+                }
+                
+                // Заменяем множественные пробелы на один
+                value = value.replace(/\s+/g, ' ');
+                newsContentInput.value = value;
+                
+                const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?\n-]+$/;
+                
+                if (value.length < 10) {
+                    showError(newsContentInput, contentError, 'Содержание должно быть не менее 10 символов');
+                    return false;
+                } else if (value.length > 50) {
+                    showError(newsContentInput, contentError, 'Содержание не должно превышать 50 символов');
+                    return false;
+                } else if (!regex.test(value)) {
+                    showError(newsContentInput, contentError, 'Можно использовать только буквы, цифры и знаки препинания');
+                    return false;
+                } else {
+                    clearError(newsContentInput, contentError);
+                    return true;
+                }
+            }
             
             // Показать ошибку
             function showError(input, errorElement, message) {
@@ -592,15 +642,13 @@ function validateContent() {
                 let news = getNewsFromStorage();
                 
                 // Поиск по тексту
-                const searchTerm = searchInput.value.toLowerCase();
+                const searchTerm = searchInput.value.toLowerCase().trim();
                 if (searchTerm) {
                     news = news.filter(item => 
                         item.title.toLowerCase().includes(searchTerm) || 
                         item.content.toLowerCase().includes(searchTerm)
                     );
                 }
-                
-              
                 
                 // Сортировка
                 const sortOption = sortSelect.value;
@@ -621,13 +669,6 @@ function validateContent() {
                 
                 // Отображение
                 renderNews(news);
-            }
-            
-            // Функция очистки фильтра по дате
-            function clearDateFilter() {
-                startDateInput.value = '';
-                endDateInput.value = '';
-                loadNews();
             }
             
             // Функция отображения новостей
@@ -695,12 +736,12 @@ function validateContent() {
                         });
                         
                         editContentInput.addEventListener('input', function() {
-                            validateEditInput(editContentInput, editContentError, 10,30);
+                            validateEditInput(editContentInput, editContentError, 10, 50);
                         });
                         
                         saveEditBtn.addEventListener('click', () => {
                             const isTitleValid = validateEditInput(editTitleInput, editTitleError, 2, 30);
-                            const isContentValid = validateEditInput(editContentInput, editContentError, 10,30);
+                            const isContentValid = validateEditInput(editContentInput, editContentError, 10, 50);
                             
                             if (!isTitleValid || !isContentValid) {
                                 return;
@@ -717,29 +758,31 @@ function validateContent() {
             }
             
             // Валидация при редактировании
-            function validateEditInput(input, errorElement, minLength, maxLength = null) {
-                 let value = input.value.trim();
-    // Заменяем множественные пробелы на один
-    value = value.replace(/\s+/g, ' ');
-    // Обновляем значение в поле ввода
-    input.value = value;
-    
-    const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?\n-]+$/;
-    
+            function validateEditInput(input, errorElement, minLength, maxLength) {
+                let value = input.value.trim();
+                
+                // Проверка на пустую строку или строку, начинающуюся с пробела
+                if (value === '' || /^\s/.test(input.value)) {
+                    input.classList.add('input-error');
+                    errorElement.textContent = 'Поле не может начинаться с пробела';
+                    return false;
+                }
+                
+                // Заменяем множественные пробелы на один
+                value = value.replace(/\s+/g, ' ');
+                input.value = value;
+                
+                const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?\n-]+$/;
+                
                 if (value.length < minLength) {
                     input.classList.add('input-error');
                     errorElement.textContent = `Поле должно содержать минимум ${minLength} символа`;
                     return false;
-                } else if (maxLength && value.length > maxLength) {
+                } else if (value.length > maxLength) {
                     input.classList.add('input-error');
                     errorElement.textContent = `Поле не должно превышать ${maxLength} символов`;
                     return false;
-                } 
-                else if (input === editTitleInput && value.length > 30) {
-    input.classList.add('input-error');
-    errorElement.textContent = 'Заголовок не должен превышать 30 символов';
-    return false;
-}else if (!regex.test(value)) {
+                } else if (!regex.test(value)) {
                     input.classList.add('input-error');
                     errorElement.textContent = 'Можно использовать только буквы, цифры и знаки препинания';
                     return false;
