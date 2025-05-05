@@ -489,6 +489,11 @@
             // Валидация ввода
             newsTitleInput.addEventListener('input', validateTitle);
             newsContentInput.addEventListener('input', validateContent);
+
+// Вспомогательная функция для ограничения повторяющихся символов
+function limitRepeatingChars(text, maxRepeat = 5) {
+  return text.replace(/(.)\1{5,}/g, (match) => match.slice(0, maxRepeat));
+}
             
             // Обработчик ввода для поиска
             function handleSearchInput() {
@@ -631,35 +636,38 @@
             }
             
             // Функция добавления новости
-            function addNews() {
-                const isTitleValid = validateTitle();
-                const isContentValid = validateContent();
-                
-                if (!isTitleValid || !isContentValid) {
-                    return;
-                }
-                
-                const title = newsTitleInput.value.trim();
-                const content = newsContentInput.value.trim();
-                
-                const newsItem = {
-                    id: Date.now(),
-                    title: title,
-                    content: content,
-                    date: new Date().toISOString()
-                };
-                
-                let news = getNewsFromStorage();
-                news.unshift(newsItem);
-                saveNewsToStorage(news);
-                
-                // Очистка формы
-                newsTitleInput.value = '';
-                newsContentInput.value = '';
-                
-                // Обновление списка
-                loadNews();
-            }
+            // Функция добавления новости
+function addNews() {
+    // Валидация
+    const isTitleValid = validateTitle();
+    const isContentValid = validateContent();
+    
+    if (!isTitleValid || !isContentValid) {
+        return;
+    }
+    
+    // Ограничение повторяющихся символов
+    const title = limitRepeatingChars(newsTitleInput.value.trim());
+    const content = limitRepeatingChars(newsContentInput.value.trim());
+    
+    const newsItem = {
+        id: Date.now(),
+        title: title,
+        content: content,
+        date: new Date().toISOString()
+    };
+    
+    let news = getNewsFromStorage();
+    news.unshift(newsItem);
+    saveNewsToStorage(news);
+    
+    // Очистка формы
+    newsTitleInput.value = '';
+    newsContentInput.value = '';
+    
+    // Обновление списка
+    loadNews();
+}
             
             // Функция загрузки новостей
             function loadNews() {
@@ -829,22 +837,27 @@
             }
             
             // Функция обновления новости
-            function updateNews(id, newTitle, newContent) {
-                let news = getNewsFromStorage();
-                const index = news.findIndex(item => item.id === id);
-                
-                if (index !== -1) {
-                    news[index] = {
-                        ...news[index],
-                        title: newTitle,
-                        content: newContent,
-                        date: new Date().toISOString()
-                    };
-                    
-                    saveNewsToStorage(news);
-                    loadNews();
-                }
-            }
+            // Функция обновления новости
+function updateNews(id, newTitle, newContent) {
+    // Ограничение повторяющихся символов
+    newTitle = limitRepeatingChars(newTitle);
+    newContent = limitRepeatingChars(newContent);
+    
+    let news = getNewsFromStorage();
+    const index = news.findIndex(item => item.id === id);
+    
+    if (index !== -1) {
+        news[index] = {
+            ...news[index],
+            title: newTitle,
+            content: newContent,
+            date: new Date().toISOString()
+        };
+        
+        saveNewsToStorage(news);
+        loadNews();
+    }
+}
             
             // Вспомогательные функции для работы с LocalStorage
             function getNewsFromStorage() {
