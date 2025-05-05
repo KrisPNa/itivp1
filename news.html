@@ -524,18 +524,19 @@
             
             // Функция валидации заголовка
             function validateTitle() {
-                let value = newsTitleInput.value.trim();
-                
-                // Проверка на пустую строку или строку, начинающуюся с пробела
-                if (value === '' || /^\s/.test(newsTitleInput.value)) {
-                    showError(newsTitleInput, titleError, 'Заголовок не может начинаться с пробела');
-                    return false;
-                }
-                
-                // Заменяем множественные пробелы на один
-                value = value.replace(/\s+/g, ' ');
-                newsTitleInput.value = value;
-                
+                let value = newsTitleInput.value;
+    
+    // Заменяем множественные пробелы на один
+    value = value.replace(/\s+/g, ' ');
+    newsTitleInput.value = value;
+    
+    const trimmedValue = value.trim();
+    
+    // Проверка на пустую строку
+    if (trimmedValue === '') {
+        showError(newsTitleInput, titleError, 'Заголовок не может быть пустым');
+        return false;
+    }
                 const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?-]+$/;
                 
                 if (value.length < 2) {
@@ -555,18 +556,19 @@
             
             // Функция валидации содержания
             function validateContent() {
-                let value = newsContentInput.value.trim();
-                
-                // Проверка на пустую строку или строку, начинающуюся с пробела
-                if (value === '' || /^\s/.test(newsContentInput.value)) {
-                    showError(newsContentInput, contentError, 'Текст новости не может начинаться с пробела');
-                    return false;
-                }
-                
-                // Заменяем множественные пробелы на один
-                value = value.replace(/\s+/g, ' ');
-                newsContentInput.value = value;
-                
+                 let value = newsContentInput.value;
+    
+    // Заменяем множественные пробелы на один
+    value = value.replace(/\s+/g, ' ');
+    newsContentInput.value = value;
+    
+    const trimmedValue = value.trim();
+    
+    // Проверка на пустую строку
+    if (trimmedValue === '') {
+        showError(newsContentInput, contentError, 'Текст новости не может быть пустым');
+        return false;
+    }
                 const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?\n-]+$/;
                 
                 if (value.length < 10) {
@@ -781,19 +783,20 @@
             
             // Валидация при редактировании
             function validateEditInput(input, errorElement, minLength, maxLength) {
-                let value = input.value.trim();
-                
-                // Проверка на пустую строку или строку, начинающуюся с пробела
-                if (value === '' || /^\s/.test(input.value)) {
-                    input.classList.add('input-error');
-                    errorElement.textContent = 'Поле не может начинаться с пробела';
-                    return false;
-                }
-                
-                // Заменяем множественные пробелы на один
-                value = value.replace(/\s+/g, ' ');
-                input.value = value;
-                
+                 let value = input.value;
+    
+    // Заменяем множественные пробелы на один
+    value = value.replace(/\s+/g, ' ');
+    input.value = value;
+    
+    const trimmedValue = value.trim();
+    
+    // Проверка на пустую строку
+    if (trimmedValue === '') {
+        input.classList.add('input-error');
+        errorElement.textContent = 'Поле не может быть пустым';
+        return false;
+    }
                 const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?\n-]+$/;
                 
                 if (value.length < minLength) {
