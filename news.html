@@ -392,7 +392,7 @@
             <!-- Панель администратора -->
             <div class="admin-panel">
                 <div id="login-section">
-                    <input type="password" id="admin-password" placeholder="Пароль администратора">
+                    <input type="password" id="admin-password" placeholder="Пароль администратора" maxlength="100">
                     <button id="login-btn">Войти</button>
                 </div>
                 <div id="logout-section" style="display: none;">
@@ -444,6 +444,10 @@
   </footer>
 
     <script>
+
+
+        // Функция проверки пароля
+
         // Бургер-меню
         const burgerButton = document.querySelector('.burger-menu-button');
         const nav = document.querySelector('.main-nav');
@@ -473,6 +477,28 @@
             const contentError = document.getElementById('content-error');
             const searchError = document.getElementById('search-error');
             
+            function validatePassword(password) {
+    // Проверка на длину (не более 100 символов)
+    if (password.length > 100) {
+        alert('Пароль не может превышать 100 символов');
+        return false;
+    }
+    
+    // Проверка на повторяющиеся символы (не более 20 подряд)
+    if (/(.)\1{20,}/.test(password)) {
+        alert('Пароль содержит слишком много повторяющихся символов подряд');
+        return false;
+    }
+    
+    return true;
+}
+             adminPasswordInput.addEventListener('input', function() {
+        if (this.value.length > 100) {
+            this.value = this.value.slice(0, 100);
+            return;
+        }
+        this.value = this.value.replace(/(.)\1{20,}/g, match => match.slice(0, 20));
+    });
             // Проверка авторизации при загрузке
             checkAuth();
             
@@ -617,16 +643,24 @@ function limitRepeatingChars(text, maxRepeat = 5) {
             }
             
             // Функция входа администратора
-            function loginAdmin() {
-                if (adminPasswordInput.value === ADMIN_PASSWORD) {
-                    localStorage.setItem('adminAuth', 'true');
-                    checkAuth();
-                    adminPasswordInput.value = '';
-                    alert('Вы успешно вошли как администратор');
-                } else {
-                    alert('Неверный пароль!');
-                }
-            }
+            // Функция входа администратора
+function loginAdmin() {
+    const password = adminPasswordInput.value;
+    
+    // Валидация пароля
+    if (!validatePassword(password)) {
+        return;
+    }
+    
+    if (password === ADMIN_PASSWORD) {
+        localStorage.setItem('adminAuth', 'true');
+        checkAuth();
+        adminPasswordInput.value = '';
+        alert('Вы успешно вошли как администратор');
+    } else {
+        alert('Неверный пароль!');
+    }
+}
             
             // Функция выхода администратора
             function logoutAdmin() {
