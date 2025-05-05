@@ -406,7 +406,7 @@
                 <h3>Добавить новость</h3>
                 <input type="text" id="news-title" placeholder="Заголовок новости (2-30 символов)" maxlength="30" required>
                 <div id="title-error" class="error-message"></div>
-                <textarea id="news-content" placeholder="Содержание новости (10-500 символов)" maxlength="50" required></textarea>
+                <textarea id="news-content" placeholder="Содержание новости (10-500 символов)" maxlength="500" required></textarea>
                 <div id="content-error" class="error-message"></div>
                 <button id="add-news-btn">Опубликовать новость</button>
             </div>
@@ -727,7 +727,7 @@
                         <div class="edit-form" id="edit-form-${item.id}">
                             <input type="text" class="edit-title" value="${item.title}" maxlength="30" required>
                             <div class="edit-title-error error-message"></div>
-                            <textarea class="edit-content" maxlength="50" required>${item.content}</textarea>
+                            <textarea class="edit-content" maxlength="500" required>${item.content}</textarea>
                             <div class="edit-content-error error-message"></div>
                             <button class="save-edit-btn">Сохранить</button>
                             <button class="cancel-edit-btn">Отмена</button>
@@ -758,12 +758,12 @@
                         });
                         
                         editContentInput.addEventListener('input', function() {
-                            validateEditInput(editContentInput, editContentError, 10, 50);
+                            validateEditInput(editContentInput, editContentError, 10, 500);
                         });
                         
                         saveEditBtn.addEventListener('click', () => {
                             const isTitleValid = validateEditInput(editTitleInput, editTitleError, 2, 30);
-                            const isContentValid = validateEditInput(editContentInput, editContentError, 10, 50);
+                            const isContentValid = validateEditInput(editContentInput, editContentError, 10, 500);
                             
                             if (!isTitleValid || !isContentValid) {
                                 return;
