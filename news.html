@@ -392,7 +392,7 @@
             <!-- Панель администратора -->
             <div class="admin-panel">
                 <div id="login-section">
-                    <input type="password" id="admin-password" placeholder="Пароль администратора">
+                    <input type="password" id="admin-password" placeholder="Пароль администратора" maxlength="100">
                     <button id="login-btn">Войти</button>
                 </div>
                 <div id="logout-section" style="display: none;">
@@ -444,11 +444,10 @@
   </footer>
 
     <script>
-         const ADMIN_PASSWORD = "1234"; // Пароль администратора
-let isEditing = false; // Добавить в начале скрипта, после объявления констант
-
-        // Функция проверки пароля
-
+         const ADMIN_PASSWORD = "1234";
+        let loginAttempts = 0;
+const MAX_ATTEMPTS = 20;
+let isEditing = false; 
         // Бургер-меню
         const burgerButton = document.querySelector('.burger-menu-button');
         const nav = document.querySelector('.main-nav');
@@ -632,51 +631,72 @@ function limitRepeatingChars(text, maxRepeat = 5) {
             }
             
             // Функция проверки авторизации
-            function checkAuth() {
-                if (localStorage.getItem('adminAuth') === 'true') {
-                    document.body.classList.add('admin-mode');
-                    loginSection.style.display = 'none';
-                    logoutSection.style.display = 'block';
-                } else {
-                    document.body.classList.remove('admin-mode');
-                    loginSection.style.display = 'block';
-                    logoutSection.style.display = 'none';
-                }
-            }
+        function checkAuth() {
+    if (localStorage.getItem('adminAuth') === 'true') {
+        document.body.classList.add('admin-mode');
+        loginSection.style.display = 'none';
+        logoutSection.style.display = 'block';
+        return true;
+    } else {
+        document.body.classList.remove('admin-mode');
+        loginSection.style.display = 'block';
+        logoutSection.style.display = 'none';
+        return false;
+    }
+}
+adminPasswordInput.addEventListener('input', function(e) {
+    // Ограничение длины
+    if (this.value.length > 100) {
+        this.value = this.value.slice(0, 100);
+        return;
+    }
+
+});
             
-            // Функция входа администратора
-            // Функция входа администратора
+      
 function loginAdmin() {
-    const password = adminPasswordInput.value;
+    const password = adminPasswordInput.value.trim();
     
-    // Для пароля "1234" пропускаем все проверки
+
+    if (loginAttempts >= MAX_ATTEMPTS) {
+        const lastAttemptTime = localStorage.getItem('lastAttemptTime');
+        if (lastAttemptTime && (Date.now() - lastAttemptTime) > 300000) { // 5 минут
+            loginAttempts = 0;
+        } else {
+            alert(`Слишком много попыток. Попробуйте позже.`);
+            return;
+        }
+    }
+    
     if (password === ADMIN_PASSWORD) {
+        // Успешный вход
         localStorage.setItem('adminAuth', 'true');
+        localStorage.removeItem('lastAttemptTime');
+        loginAttempts = 0;
         checkAuth();
         adminPasswordInput.value = '';
         alert('Вы успешно вошли как администратор');
-        return;
+    } else {
+        // Неудачная попытка
+        loginAttempts++;
+        localStorage.setItem('lastAttemptTime', Date.now());
+        alert(`Неверный пароль! Осталось попыток: ${MAX_ATTEMPTS - loginAttempts}`);
+        if (loginAttempts >= MAX_ATTEMPTS) {
+            alert('Доступ заблокирован на 5 минут');
+        }
     }
-    
-    // Для других паролей применяем валидацию
-    if (!validatePassword(password)) {
-        return;
-    }
-    
-    alert('Неверный пароль!');
 }
-            
-            // Функция выхода администратора
-            function logoutAdmin() {
-                localStorage.removeItem('adminAuth');
-                checkAuth();
-                alert('Вы вышли из режима администратора');
-            }
-            
-            // Функция добавления новости
+function logoutAdmin() {
+    localStorage.removeItem('adminAuth');
+    checkAuth();
+    alert('Вы вышли из режима администратора');
+}
             // Функция добавления новости
 function addNews() {
-    // Валидация
+   if (!checkAuth()) {
+        alert('Требуется авторизация администратора');
+        return;
+    }
     const isTitleValid = validateTitle();
     const isContentValid = validateContent();
     
