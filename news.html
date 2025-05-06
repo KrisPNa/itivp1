@@ -444,7 +444,7 @@
   </footer>
 
     <script>
-         const ADMIN_PASSWORD = "1234";
+         
         let loginAttempts = 0;
 const MAX_ATTEMPTS = 20;
 let isEditing = false; 
@@ -458,7 +458,54 @@ let isEditing = false;
 
         // Новостная система
         document.addEventListener('DOMContentLoaded', function() {
-     
+     const ADMIN_PASSWORD = "1234";
+            const adminPasswordInput = document.getElementById('admin-password');
+            const loginBtn = document.getElementById('login-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            const loginSection = document.getElementById('login-section');
+            const logoutSection = document.getElementById('logout-section');
+
+            // Проверка авторизации при загрузке
+            checkAuth();
+
+            // Обработчики событий
+            loginBtn.addEventListener('click', loginAdmin);
+            logoutBtn.addEventListener('click', logoutAdmin);
+
+            function checkAuth() {
+                if (localStorage.getItem('adminAuth') === 'true') {
+                    document.body.classList.add('admin-mode');
+                    loginSection.style.display = 'none';
+                    logoutSection.style.display = 'block';
+                    return true;
+                } else {
+                    document.body.classList.remove('admin-mode');
+                    loginSection.style.display = 'block';
+                    logoutSection.style.display = 'none';
+                    return false;
+                }
+            }
+
+            function loginAdmin() {
+                const password = adminPasswordInput.value.trim();
+                
+                if (password === ADMIN_PASSWORD) {
+                    localStorage.setItem('adminAuth', 'true');
+                    checkAuth();
+                    adminPasswordInput.value = '';
+                    alert('Вы успешно вошли как администратор');
+                    loadNews(); // Перезагружаем новости после входа
+                } else {
+                    alert('Неверный пароль!');
+                }
+            }
+
+            function logoutAdmin() {
+                localStorage.removeItem('adminAuth');
+                checkAuth();
+                alert('Вы вышли из режима администратора');
+                loadNews(); // Перезагружаем новости после выхода
+            }
 
             // Элементы DOM
             const newsContainer = document.getElementById('news-container');
@@ -630,19 +677,7 @@ function limitRepeatingChars(text, maxRepeat = 5) {
             }
             
             // Функция проверки авторизации
-        function checkAuth() {
-    if (localStorage.getItem('adminAuth') === 'true') {
-        document.body.classList.add('admin-mode');
-        loginSection.style.display = 'none';
-        logoutSection.style.display = 'block';
-        return true;
-    } else {
-        document.body.classList.remove('admin-mode');
-        loginSection.style.display = 'block';
-        logoutSection.style.display = 'none';
-        return false;
-    }
-}
+    
 adminPasswordInput.addEventListener('input', function(e) {
     // Ограничение длины
     if (this.value.length > 100) {
@@ -653,24 +688,8 @@ adminPasswordInput.addEventListener('input', function(e) {
 });
             
       
-function loginAdmin() {
-    const password = adminPasswordInput.value.trim();
-    
-    if (password === ADMIN_PASSWORD) {
-        localStorage.setItem('adminAuth', 'true');
-        checkAuth();
-        adminPasswordInput.value = '';
-        alert('Вы успешно вошли как администратор');
-    } else {
-        alert('Неверный пароль!');
-    }
-}
-}
-function logoutAdmin() {
-    localStorage.removeItem('adminAuth');
-    checkAuth();
-    alert('Вы вышли из режима администратора');
-}
+
+
             // Функция добавления новости
 function addNews() {
    if (!checkAuth()) {
