@@ -444,7 +444,7 @@
   </footer>
 
     <script>
-
+let isEditing = false; // Добавить в начале скрипта, после объявления констант
 
         // Функция проверки пароля
 
@@ -793,8 +793,22 @@ function addNews() {
                         const editContentError = newsItem.querySelector('.edit-content-error');
                         
                         deleteBtn.addEventListener('click', () => deleteNews(item.id));
-                        editBtn.addEventListener('click', () => editForm.style.display = 'block');
-                        cancelEditBtn.addEventListener('click', () => editForm.style.display = 'none');
+                        editBtn.addEventListener('click', () => {
+    if (isEditing) {
+        alert('Завершите текущее редактирование перед редактированием другой новости');
+        return;
+    }
+    isEditing = true;
+    editForm.style.display = 'block';
+                            document.querySelectorAll('.news-item').forEach(item => {
+    item.classList.remove('disabled');
+});
+    cancelEditBtn.addEventListener('click', () => {
+    editForm.style.display = 'none';
+    isEditing = false; 
+    document.querySelectorAll('.news-item').forEach(item => {
+    item.classList.remove('disabled');
+});
                         
                         // Валидация при редактировании
                         editTitleInput.addEventListener('input', function() {
@@ -811,6 +825,7 @@ function addNews() {
                             
                             if (!isTitleValid || !isContentValid) {
                                 return;
+                                  isEditing = false;
                             }
                             
                             const newTitle = editTitleInput.value.trim();
@@ -903,6 +918,30 @@ function updateNews(id, newTitle, newContent) {
                 localStorage.setItem('news', JSON.stringify(news));
             }
         });
+        // Добавить обработчики для всех полей ввода
+function setupInputValidation() {
+    const inputs = [
+        newsTitleInput,
+        newsContentInput,
+        adminPasswordInput,
+        document.getElementById('search-news')
+    ];
+
+    inputs.forEach(input => {
+        input.addEventListener('input', function(e) {
+            // Ограничение на повторяющиеся символы
+            this.value = this.value.replace(/(.)\1{5,}/g, match => match.slice(0, 5));
+            
+            // Для пароля - дополнительное ограничение длины
+            if (this === adminPasswordInput && this.value.length > 100) {
+                this.value = this.value.slice(0, 100);
+            }
+        });
+    });
+}
+
+// Вызвать эту функцию после объявления всех элементов DOM
+setupInputValidation();
     </script>
 </body>
 </html>
