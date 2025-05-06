@@ -392,7 +392,7 @@
             <!-- Панель администратора -->
             <div class="admin-panel">
                 <div id="login-section">
-                    <input type="password" id="admin-password" placeholder="Пароль администратора" maxlength="100">
+                    <input type="password" id="admin-password" placeholder="Пароль администратора">
                     <button id="login-btn">Войти</button>
                 </div>
                 <div id="logout-section" style="display: none;">
@@ -444,6 +444,7 @@
   </footer>
 
     <script>
+         const ADMIN_PASSWORD = "1234"; // Пароль администратора
 let isEditing = false; // Добавить в начале скрипта, после объявления констант
 
         // Функция проверки пароля
@@ -478,7 +479,8 @@ let isEditing = false; // Добавить в начале скрипта, по�
             const searchError = document.getElementById('search-error');
             
             function validatePassword(password) {
-    // Проверка на длину (не более 100 символов)
+                if (password === ADMIN_PASSWORD) return true;
+  
     if (password.length > 100) {
         alert('Пароль не может превышать 100 символов');
         return false;
@@ -647,19 +649,21 @@ function limitRepeatingChars(text, maxRepeat = 5) {
 function loginAdmin() {
     const password = adminPasswordInput.value;
     
-    // Валидация пароля
-    if (!validatePassword(password)) {
-        return;
-    }
-    
+    // Для пароля "1234" пропускаем все проверки
     if (password === ADMIN_PASSWORD) {
         localStorage.setItem('adminAuth', 'true');
         checkAuth();
         adminPasswordInput.value = '';
         alert('Вы успешно вошли как администратор');
-    } else {
-        alert('Неверный пароль!');
+        return;
     }
+    
+    // Для других паролей применяем валидацию
+    if (!validatePassword(password)) {
+        return;
+    }
+    
+    alert('Неверный пароль!');
 }
             
             // Функция выхода администратора
