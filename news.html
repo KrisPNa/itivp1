@@ -556,29 +556,25 @@
 
             // Функция валидации содержания
             function validateContent() {
-                 let value = newsContentInput.value;
+                let value = newsContentInput.value;
     
-    // Заменяем множественные пробелы на один
-    value = value.replace(/\s+/g, ' ');
-    newsContentInput.value = value;
+                // Заменяем множественные пробелы на один
+                value = value.replace(/\s+/g, ' ');
+                newsContentInput.value = value;
     
-    const trimmedValue = value.trim();
+                const trimmedValue = value.trim();
     
-    // Проверка на пустую строку
-    if (trimmedValue === '') {
-        showError(newsContentInput, contentError, 'Текст новости не может быть пустым');
-        return false;
-    }
-                const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?\n-]+$/;
+                // Проверка на пустую строку
+                if (trimmedValue === '') {
+                    showError(newsContentInput, contentError, 'Текст новости не может быть пустым');
+                    return false;
+                }
 
                 if (value.length < 10) {
                     showError(newsContentInput, contentError, 'Содержание должно быть не менее 10 символов');
                     return false;
                 } else if (value.length > 500) {
                     showError(newsContentInput, contentError, 'Содержание не должно превышать 500 символов');
-                    return false;
-                } else if (!regex.test(value)) {
-                    showError(newsContentInput, contentError, 'Можно использовать только буквы, цифры и знаки препинания');
                     return false;
                 } else {
                     clearError(newsContentInput, contentError);
@@ -751,8 +747,30 @@
                         const editContentError = newsItem.querySelector('.edit-content-error');
 
                         deleteBtn.addEventListener('click', () => deleteNews(item.id));
-                        editBtn.addEventListener('click', () => editForm.style.display = 'block');
-                        cancelEditBtn.addEventListener('click', () => editForm.style.display = 'none');
+                        
+                        editBtn.addEventListener('click', () => {
+                            // Проверяем, не редактируется ли уже какая-то новость
+                            const activeEditForm = document.querySelector('.edit-form[style="display: block"]');
+                            if (activeEditForm && activeEditForm.id !== `edit-form-${item.id}`) {
+                                alert('Сначала завершите редактирование текущей новости');
+                                return;
+                            }
+                            editForm.style.display = 'block';
+                            // Отключаем кнопки редактирования у других новостей
+                            document.querySelectorAll('.edit-btn').forEach(btn => {
+                                if (btn !== editBtn) {
+                                    btn.disabled = true;
+                                }
+                            });
+                        });
+
+                        cancelEditBtn.addEventListener('click', () => {
+                            editForm.style.display = 'none';
+                            // Включаем кнопки редактирования у других новостей
+                            document.querySelectorAll('.edit-btn').forEach(btn => {
+                                btn.disabled = false;
+                            });
+                        });
 
                         // Валидация при редактировании
                         editTitleInput.addEventListener('input', function() {
@@ -776,6 +794,10 @@
 
                             updateNews(item.id, newTitle, newContent);
                             editForm.style.display = 'none';
+                            // Включаем кнопки редактирования у других новостей
+                            document.querySelectorAll('.edit-btn').forEach(btn => {
+                                btn.disabled = false;
+                            });
                         });
                     }
                 });
@@ -783,21 +805,20 @@
 
             // Валидация при редактировании
             function validateEditInput(input, errorElement, minLength, maxLength) {
-                 let value = input.value;
+                let value = input.value;
     
-    // Заменяем множественные пробелы на один
-    value = value.replace(/\s+/g, ' ');
-    input.value = value;
+                // Заменяем множественные пробелы на один
+                value = value.replace(/\s+/g, ' ');
+                input.value = value;
     
-    const trimmedValue = value.trim();
+                const trimmedValue = value.trim();
     
-    // Проверка на пустую строку
-    if (trimmedValue === '') {
-        input.classList.add('input-error');
-        errorElement.textContent = 'Поле не может быть пустым';
-        return false;
-    }
-                const regex = /^[a-zA-Zа-яА-Я0-9\s.,!?\n-]+$/;
+                // Проверка на пустую строку
+                if (trimmedValue === '') {
+                    input.classList.add('input-error');
+                    errorElement.textContent = 'Поле не может быть пустым';
+                    return false;
+                }
 
                 if (value.length < minLength) {
                     input.classList.add('input-error');
@@ -806,10 +827,6 @@
                 } else if (value.length > maxLength) {
                     input.classList.add('input-error');
                     errorElement.textContent = `Поле не должно превышать ${maxLength} символов`;
-                    return false;
-                } else if (!regex.test(value)) {
-                    input.classList.add('input-error');
-                    errorElement.textContent = 'Можно использовать только буквы, цифры и знаки препинания';
                     return false;
                 } else {
                     input.classList.remove('input-error');
